@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FGJX_Game", "Assembly-CSharp-firstpass.csproj", "{B4727AD8-7568-AC53-30E6-A5705DD4B07A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FGJX_Game", "Assembly-CSharp.csproj", "{0D0FB425-C2EF-59B2-9AA4-F2D90AD5D7A8}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FGJX_Game", "Assembly-CSharp-Editor-firstpass.csproj", "{337A787B-F126-688E-042A-AD32E3F2B409}"
 EndProject
 Global
@@ -15,6 +17,10 @@ Global
 		{B4727AD8-7568-AC53-30E6-A5705DD4B07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4727AD8-7568-AC53-30E6-A5705DD4B07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4727AD8-7568-AC53-30E6-A5705DD4B07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D0FB425-C2EF-59B2-9AA4-F2D90AD5D7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D0FB425-C2EF-59B2-9AA4-F2D90AD5D7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D0FB425-C2EF-59B2-9AA4-F2D90AD5D7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D0FB425-C2EF-59B2-9AA4-F2D90AD5D7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{337A787B-F126-688E-042A-AD32E3F2B409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{337A787B-F126-688E-042A-AD32E3F2B409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{337A787B-F126-688E-042A-AD32E3F2B409}.Release|Any CPU.ActiveCfg = Release|Any CPU
