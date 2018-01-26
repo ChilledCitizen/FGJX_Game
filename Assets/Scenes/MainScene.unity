@@ -488,6 +488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 0
   walkingSpeed: 0.001
+  maxYOffSet: 150
+  maxXOffSet: 150
 --- !u!1 &1480665504
 GameObject:
   m_ObjectHideFlags: 0

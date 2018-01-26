@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 touchStartPos;
     private Vector2 touchCurrentPos;
 
+	public float maxYOffSet, maxXOffSet;
+	//public float maxDeltaMagnitude;
+
     // Use this for initialization
     void Start()
     {
@@ -39,7 +42,25 @@ public class PlayerController : MonoBehaviour
 			touchCurrentPos = Input.GetTouch(0).position;
 
 			Vector2 touchDeltaPosition = touchStartPos - touchCurrentPos;
-
+			//Debug.Log("magnitude: " + touchCurrentPos.magnitude);
+			Debug.Log("deltaTouchPos: " +touchDeltaPosition);
+			
+			if(touchDeltaPosition.x > maxXOffSet)
+			{
+				touchDeltaPosition.x = maxXOffSet;
+			}
+			else if(touchDeltaPosition.x < -maxXOffSet)
+			{
+				touchDeltaPosition.x = -maxXOffSet;
+			}
+			if(touchDeltaPosition.y > maxYOffSet)
+			{
+				touchDeltaPosition.y = maxYOffSet;
+			}
+			else if(touchDeltaPosition.y < -maxYOffSet)
+			{
+				touchDeltaPosition.y = -maxYOffSet;
+			}
 
             // Move object across XY plane
             transform.Translate(-touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed, 0);
