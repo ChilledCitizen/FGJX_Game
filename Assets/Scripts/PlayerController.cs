@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
 
 
-
+    public GameControllerScript gameController;
     public int healthPoints;
+    public GameObject relayTower;
+    public float relayMakeOffSet;
 
     public float walkingSpeed = 1;
     private Vector2 touchStartPos;
@@ -19,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        gameController = FindObjectOfType(typeof(GameControllerScript)) as GameControllerScript;
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
 			Vector2 touchDeltaPosition = touchStartPos - touchCurrentPos;
 			//Debug.Log("magnitude: " + touchCurrentPos.magnitude);
-			Debug.Log("deltaTouchPos: " +touchDeltaPosition);
+			//Debug.Log("deltaTouchPos: " +touchDeltaPosition);
 			
 			if(touchDeltaPosition.x > maxXOffSet)
 			{
@@ -69,7 +71,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Resource")
+        {
+            gameController.ResourceAmountUpdate();
+            Destroy(other.gameObject);
+        }
+        
+    } 
 
+    public void OnMakeRelayTower()
+    {
+        if(gameController.resourceAmount > gameController.requiredResourceAmount)
+        {
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y+relayMakeOffSet);
+            Instantiate(relayTower,pos,Quaternion.identity);
+            gameController.requiredResourceAmount = (int)Mathf.Pow(gameController.requiredResourceAmount,gameController.resourceReqPow); 
+        }
+        
+    }
 
 }
 
