@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 touchStartPos;
     private Vector2 touchCurrentPos;
     private SpriteRenderer sprite;
-	public float maxYOffSet, maxXOffSet;
-	//public float maxDeltaMagnitude;
+    public float maxYOffSet, maxXOffSet;
+    //public float maxDeltaMagnitude;
 
     // Use this for initialization
     void Start()
@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y -100)*-1;
 
-        
+        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y - 100) * -1;
+
+
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             touchStartPos = Input.GetTouch(0).position;
@@ -42,57 +42,78 @@ public class PlayerController : MonoBehaviour
             // Vector2 touchDeltaPosition = touchStartPos - Input.GetTouch(0).position;
             //touchDeltaPosition.Normalize();
 
-			touchCurrentPos = Input.GetTouch(0).position;
+            touchCurrentPos = Input.GetTouch(0).position;
 
-			Vector2 touchDeltaPosition = touchStartPos - touchCurrentPos;
-			//Debug.Log("magnitude: " + touchCurrentPos.magnitude);
-			//Debug.Log("deltaTouchPos: " +touchDeltaPosition);
-			
-			if(touchDeltaPosition.x > maxXOffSet)
-			{
-				touchDeltaPosition.x = maxXOffSet;
-			}
-			else if(touchDeltaPosition.x < -maxXOffSet)
-			{
-				touchDeltaPosition.x = -maxXOffSet;
-			}
-			if(touchDeltaPosition.y > maxYOffSet)
-			{
-				touchDeltaPosition.y = maxYOffSet;
-			}
-			else if(touchDeltaPosition.y < -maxYOffSet)
-			{
-				touchDeltaPosition.y = -maxYOffSet;
-			}
+            Vector2 touchDeltaPosition = touchStartPos - touchCurrentPos;
+            //Debug.Log("magnitude: " + touchCurrentPos.magnitude);
+            //Debug.Log("deltaTouchPos: " +touchDeltaPosition);
+
+            if (touchDeltaPosition.x > maxXOffSet)
+            {
+                touchDeltaPosition.x = maxXOffSet;
+            }
+            else if (touchDeltaPosition.x < -maxXOffSet)
+            {
+                touchDeltaPosition.x = -maxXOffSet;
+            }
+            if (touchDeltaPosition.y > maxYOffSet)
+            {
+                touchDeltaPosition.y = maxYOffSet;
+            }
+            else if (touchDeltaPosition.y < -maxYOffSet)
+            {
+                touchDeltaPosition.y = -maxYOffSet;
+            }
 
             // Move object across XY plane
-            transform.Translate(-touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed,0);
+            transform.Translate(-touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed, 0);
+            if (transform.position.x <= 40)
+            {
+                 transform.Translate(touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed, 0);
+            }
+            if (transform.position.x >= 1500)
+            {
+                 transform.Translate(touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed, 0);
+            }
+            if (transform.position.y <= 20)
+            {
+                 transform.Translate(-touchDeltaPosition.x * walkingSpeed, touchDeltaPosition.y * walkingSpeed, 0);
+            }
+            if (transform.position.y >= 1530)
+            {
+                transform.Translate(-touchDeltaPosition.x * walkingSpeed, touchDeltaPosition.y * walkingSpeed, 0);
+            }
+
+
             //transform.position = new Vector2(transform.position.x + touchDeltaPosition.x*walkingSpeed, transform.position.y + touchDeltaPosition.y*walkingSpeed);
         }
+
+
+
 
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "Resource")
+        if (other.gameObject.tag == "Resource")
         {
             gameController.ResourceAmountUpdate();
             Destroy(other.gameObject);
         }
-        
-    } 
+
+    }
 
     public void OnMakeRelayTower()
     {
-        if(gameController.resourceAmount > gameController.requiredResourceAmount)
+        if (gameController.resourceAmount >= gameController.requiredResourceAmount)
         {
-            Vector2 pos = new Vector2(transform.position.x, transform.position.y+relayMakeOffSet);
-            Instantiate(relayTower,pos,Quaternion.identity);
-            gameController.UpdateUIRes(gameController.requiredResourceAmount); 
-            gameController.requiredResourceAmount =(int)(gameController.requiredResourceAmount*gameController.resourceReqPow);
-            
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y + relayMakeOffSet);
+            Instantiate(relayTower, pos, Quaternion.identity);
+            gameController.UpdateUIRes(gameController.requiredResourceAmount);
+            gameController.requiredResourceAmount = (int)Mathf.Pow(gameController.requiredResourceAmount,gameController.resourceReqPow);
+
         }
-        
+
     }
 
 }

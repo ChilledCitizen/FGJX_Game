@@ -7,6 +7,8 @@ public class UIController : MonoBehaviour {
 
 	public Image signalStrengthBack, signalStrengthFront;
 	public Text reqResource, timeTilResc,resAmount;
+
+
 	// Use this for initialization
 	void Start () {
 		

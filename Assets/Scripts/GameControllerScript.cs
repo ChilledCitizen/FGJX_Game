@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameControllerScript : MonoBehaviour
 {
 
+    public float divisionMultiplier = 1;
+    private int n;
     public int gridSize;
     public float grassOffSet;
     public float offSet;
@@ -21,25 +23,25 @@ public class GameControllerScript : MonoBehaviour
     public GameObject resourceObj;
     public List<GameObject> relayTowerList;
     public List<GameObject> gridPieces;
-    private float strength;
-
-
+    public float strength;
+    private float deltaTime;
+    private int startRescTime;
     void Start()
     {
 
         sceneScript = FindObjectOfType(typeof(SceneScript)) as SceneScript;
         uiController = FindObjectOfType(typeof(UIController)) as UIController;
-
+        startRescTime = rescueTime;
 
         // if(sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
         // {
 
         //Generate grid
-        if (sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
+        if (sceneScript.currentScene.buildIndex == sceneScript.mainLevel)//Doenst work on phone, fix!!!
         {
             for (int y = 0; y < gridSize; y++)
             {
-
+                n++;
                 for (int x = 0; x < gridSize; x++)
                 {
                     //Debug.Log("AA");
@@ -84,7 +86,7 @@ public class GameControllerScript : MonoBehaviour
                     Debug.Log(piece.transform.position);
 
                     Instantiate(spawnableGrass, new Vector3(piece.transform.position.x + Random.Range(-5, 5), piece.transform.position.y + Random.Range(-5, 5), 0), Quaternion.identity);
-                    if (i >= 2)
+                    if (i >= 2 && n % 5 == 0)
                     {
                         Instantiate(resourceObj, new Vector3(piece.transform.position.x + Random.Range(-5, 5), piece.transform.position.y + Random.Range(-5, 5), 0), Quaternion.identity);
 
@@ -99,8 +101,13 @@ public class GameControllerScript : MonoBehaviour
 
 
         }
+        if (uiController)
+        {
+            uiController.UpdateResAmount(resourceAmount);
+            uiController.UpdateTimeTilResc(rescueTime);
+            uiController.UpdateRequiredResource(requiredResourceAmount);
+        }
 
-        uiController.UpdateRequiredResource(requiredResourceAmount);
         //}
 
     }
@@ -141,41 +148,48 @@ public class GameControllerScript : MonoBehaviour
             {
                 strength += tower.GetComponent<RelayTower>().outputStength;
             }
-            if(strength >= 10 && strength < 25)
-            {
-                rescueTime = 999;
-            }
-            if(strength >= 25 && strength < 50);
-            {
-                TimeTilRescued(1.5f);
-            }
-            uiController.UpdateSignalStrength(strength);
+            TimeTilRescued(strength);
+            uiController.UpdateSignalStrength(strength / (Mathf.Sqrt(rescueTime)));
             uiController.UpdateRequiredResource(requiredResourceAmount);
         }
     }
 
-    public void TimeTilRescued(float divider)
+    public void TimeTilRescued(float signalStr)
     {
-       rescueTime = (int)(rescueTime/divider);
-       uiController.UpdateTimeTilResc(rescueTime);
+        if (rescueTime != 0)
+        {
+            rescueTime = (int)(rescueTime / (signalStr * divisionMultiplier));
+
+
+
+
+            uiController.UpdateTimeTilResc(rescueTime);
+        }
+
     }
 
     void Update()
     {
-        if (rescueTime < 1000)
+        // if (rescueTime < 1000)
+        // {
+
+        deltaTime += Time.deltaTime;
+        if (deltaTime > inGameTimeToRealTime)
         {
-            StartCoroutine(WaitForWhile(inGameTimeToRealTime));
-           
-
+            rescueTime--;
+            uiController.UpdateTimeTilResc(rescueTime);
+            deltaTime = 0;
         }
-       
-        
+
+
+        if (rescueTime < 1 && sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
+        {
+            sceneScript.LoadScene(sceneScript.winScreen);
+        }
+
+
 
     }
 
-    IEnumerator WaitForWhile(float time)
-    {
-        rescueTime--;
-        yield return new WaitForSeconds(time);
-    }
+
 }

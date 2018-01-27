@@ -122,11 +122,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4679419997087332, guid: ccd496c57e5ee1e44a84dd852ea208a5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 4679419997087332, guid: ccd496c57e5ee1e44a84dd852ea208a5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 100
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 4679419997087332, guid: ccd496c57e5ee1e44a84dd852ea208a5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -231,7 +231,7 @@ Prefab:
     - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
         type: 2}
       propertyPath: maxResourceGet
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
         type: 2}
@@ -241,7 +241,22 @@ Prefab:
     - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
         type: 2}
       propertyPath: requiredResourceAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
+        type: 2}
+      propertyPath: rescueTime
+      value: 99999
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
+        type: 2}
+      propertyPath: inGameTimeToRealTime
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520045759570122, guid: 8417e87b24c35cc4fbe9e5afda8c66a0,
+        type: 2}
+      propertyPath: divisionMultiplier
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8417e87b24c35cc4fbe9e5afda8c66a0, type: 2}

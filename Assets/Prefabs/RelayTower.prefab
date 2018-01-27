@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 0}
-  outputStength: 0.1
+  outputStength: 2.5
   healthPoints: 100
 --- !u!212 &212430330353121762
 SpriteRenderer:
