@@ -10,11 +10,10 @@ public class PlayerController : MonoBehaviour
     public int healthPoints;
     public GameObject relayTower;
     public float relayMakeOffSet;
-
     public float walkingSpeed = 1;
     private Vector2 touchStartPos;
     private Vector2 touchCurrentPos;
-
+    private SpriteRenderer sprite;
 	public float maxYOffSet, maxXOffSet;
 	//public float maxDeltaMagnitude;
 
@@ -22,14 +21,16 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameController = FindObjectOfType(typeof(GameControllerScript)) as GameControllerScript;
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y -100)*-1;
 
-
-
+        
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             touchStartPos = Input.GetTouch(0).position;
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
 			}
 
             // Move object across XY plane
-            transform.Translate(-touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed, 0);
+            transform.Translate(-touchDeltaPosition.x * walkingSpeed, -touchDeltaPosition.y * walkingSpeed,0);
             //transform.position = new Vector2(transform.position.x + touchDeltaPosition.x*walkingSpeed, transform.position.y + touchDeltaPosition.y*walkingSpeed);
         }
 
@@ -87,7 +88,9 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 pos = new Vector2(transform.position.x, transform.position.y+relayMakeOffSet);
             Instantiate(relayTower,pos,Quaternion.identity);
-            gameController.requiredResourceAmount = (int)Mathf.Pow(gameController.requiredResourceAmount,gameController.resourceReqPow); 
+            gameController.UpdateUIRes(gameController.requiredResourceAmount); 
+            gameController.requiredResourceAmount =(int)(gameController.requiredResourceAmount*gameController.resourceReqPow);
+            
         }
         
     }

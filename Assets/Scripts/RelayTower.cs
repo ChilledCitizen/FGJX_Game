@@ -7,6 +7,7 @@ public class RelayTower : MonoBehaviour {
 	public GameControllerScript gameController;
 	public float outputStength;
 	public float healthPoints;
+	private SpriteRenderer sprite;
 	void Start () {
 		if(!gameController)
 		{
@@ -17,11 +18,13 @@ public class RelayTower : MonoBehaviour {
 			gameController.relayTowerList.Add(this.gameObject);
 			gameController.CountingOuPut();
 		}
+
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 		if(healthPoints <= 0)
 		{
 			gameController.relayTowerList.Remove(this.gameObject);
@@ -30,4 +33,12 @@ public class RelayTower : MonoBehaviour {
 		}
 		
 	}
+
+	// void OnTriggerEnter2D(Collider2D other)
+	// {
+	// 	if(other.gameObject.tag =="RelayTower")
+	// 	{
+	// 		transform.Translate(Random.Range(-10,10),0,0);
+	// 	}
+	// }
 }

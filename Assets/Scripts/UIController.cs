@@ -6,7 +6,7 @@ public class UIController : MonoBehaviour {
 
 
 	public Image signalStrengthBack, signalStrengthFront;
-	public Text reqResource, timeTilResc;
+	public Text reqResource, timeTilResc,resAmount;
 	// Use this for initialization
 	void Start () {
 		
@@ -27,5 +27,9 @@ public class UIController : MonoBehaviour {
 	public void UpdateTimeTilResc(int time)
 	{
 		timeTilResc.text = "Days until rescue\n" + time;
+	}
+	public void UpdateResAmount(int amount)
+	{
+		resAmount.text = "Resources collected:\n" + amount;
 	}
 }
