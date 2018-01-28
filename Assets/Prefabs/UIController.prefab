@@ -54,3 +54,13 @@ MonoBehaviour:
   signalStrengthBack: {fileID: 0}
   signalStrengthFront: {fileID: 0}
   reqResource: {fileID: 0}
+  timeTilResc: {fileID: 0}
+  resAmount: {fileID: 0}
+  relayButton: {fileID: 0}
+  str1: {fileID: 0}
+  str2: {fileID: 0}
+  str3: {fileID: 0}
+  str4: {fileID: 0}
+  str5: {fileID: 0}
+  str6: {fileID: 0}
+  str7: {fileID: 0}

@@ -10,7 +10,7 @@ public class GameControllerScript : MonoBehaviour
     public int gridSize;
     public float grassOffSet;
     public float offSet;
-    public GameObject gridTile, grass1, grass2, grass3, grass4, grass5;
+    public GameObject gridTile, grass1, grass2, grass3, grass4, grass5, rock1, rock2, rock3;
     public SceneScript sceneScript;
     public UIController uiController;
     public int resourceAmount;
@@ -24,6 +24,7 @@ public class GameControllerScript : MonoBehaviour
     public List<GameObject> relayTowerList;
     public List<GameObject> gridPieces;
     public float strength;
+    public bool inLevel;
     private float deltaTime;
     private int startRescTime;
     void Start()
@@ -41,7 +42,7 @@ public class GameControllerScript : MonoBehaviour
         {
             for (int y = 0; y < gridSize; y++)
             {
-                n++;
+
                 for (int x = 0; x < gridSize; x++)
                 {
                     //Debug.Log("AA");
@@ -57,7 +58,8 @@ public class GameControllerScript : MonoBehaviour
             foreach (GameObject piece in gridPieces)
             {
                 GameObject spawnableGrass = grass1;
-
+                GameObject spawnableRock = rock1;
+                n++;
 
                 for (int i = 0; i < Random.Range(1, 4); i++)
                 {
@@ -83,13 +85,32 @@ public class GameControllerScript : MonoBehaviour
 
                             break;
                     }
+                    switch ((int)Random.Range(1, 4))
+                    {
+                        case 1:
+                            spawnableRock = rock1;
+                            break;
+                        case 2:
+                            spawnableRock = rock2;
+                            break;
+                        case 3:
+                            spawnableRock = rock3;
+                            break;
+                        default:
+                            break;
+
+                    }
                     Debug.Log(piece.transform.position);
 
                     Instantiate(spawnableGrass, new Vector3(piece.transform.position.x + Random.Range(-5, 5), piece.transform.position.y + Random.Range(-5, 5), 0), Quaternion.identity);
-                    if (i >= 2 && n % 5 == 0)
+                    if (i >= 2 && n % 7 == 0)
                     {
                         Instantiate(resourceObj, new Vector3(piece.transform.position.x + Random.Range(-5, 5), piece.transform.position.y + Random.Range(-5, 5), 0), Quaternion.identity);
 
+                    }
+                    if (i >= 2 && n % 5 == 0)
+                    {
+                        Instantiate(spawnableRock, new Vector3(piece.transform.position.x + Random.Range(-5, 5), piece.transform.position.y + Random.Range(-5, 5), 0), Quaternion.identity);
                     }
 
                 }
@@ -101,7 +122,7 @@ public class GameControllerScript : MonoBehaviour
 
 
         }
-        if (uiController)
+        if (uiController && sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
         {
             uiController.UpdateResAmount(resourceAmount);
             uiController.UpdateTimeTilResc(rescueTime);
@@ -117,7 +138,8 @@ public class GameControllerScript : MonoBehaviour
 
     public void OnPlayPress()
     {
-        sceneScript.LoadScene(sceneScript.mainLevel);
+        //sceneScript.LoadScene(sceneScript.mainLevel);
+        uiController.started = true;
     }
 
     public void OnQuitPress()
@@ -127,20 +149,37 @@ public class GameControllerScript : MonoBehaviour
 
     public void ResourceAmountUpdate()
     {
-        resourceAmount += Random.Range(minResourceGet, maxResourceGet);
-        uiController.UpdateResAmount(resourceAmount);
+        if (sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
+        {
+            resourceAmount += Random.Range(minResourceGet, maxResourceGet);
+            uiController.UpdateResAmount(resourceAmount);
+            if (resourceAmount >= requiredResourceAmount)
+            {
+                uiController.MakeButtonInterActable(true);
+            }
+        }
+
     }
 
-    public void UpdateUIRes(int negAmount)
+    public void UpdateUI(int negAmount)
     {
-        resourceAmount -= negAmount;
-        uiController.UpdateResAmount(resourceAmount);
+        if (sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
+        {
+            resourceAmount -= negAmount;
+            uiController.UpdateResAmount(resourceAmount);
+            if (resourceAmount < requiredResourceAmount)
+            {
+                uiController.MakeButtonInterActable(false);
+            }
+        }
+
+
 
     }
 
     public void CountingOuPut()
     {
-        if (relayTowerList.Count > 0)
+        if (relayTowerList.Count > 0 && sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
         {
 
 
@@ -156,7 +195,7 @@ public class GameControllerScript : MonoBehaviour
 
     public void TimeTilRescued(float signalStr)
     {
-        if (rescueTime != 0)
+        if (rescueTime != 0 && sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
         {
             rescueTime = (int)(rescueTime / (signalStr * divisionMultiplier));
 
@@ -174,7 +213,8 @@ public class GameControllerScript : MonoBehaviour
         // {
 
         deltaTime += Time.deltaTime;
-        if (deltaTime > inGameTimeToRealTime)
+        //uiController.UpdateNightPanel(deltaTime);
+        if (deltaTime > inGameTimeToRealTime && sceneScript.currentScene.buildIndex == sceneScript.mainLevel)
         {
             rescueTime--;
             uiController.UpdateTimeTilResc(rescueTime);
@@ -186,6 +226,8 @@ public class GameControllerScript : MonoBehaviour
         {
             sceneScript.LoadScene(sceneScript.winScreen);
         }
+
+
 
 
 

@@ -107,9 +107,10 @@ public class PlayerController : MonoBehaviour
     {
         if (gameController.resourceAmount >= gameController.requiredResourceAmount)
         {
+
             Vector2 pos = new Vector2(transform.position.x, transform.position.y + relayMakeOffSet);
             Instantiate(relayTower, pos, Quaternion.identity);
-            gameController.UpdateUIRes(gameController.requiredResourceAmount);
+            gameController.UpdateUI(gameController.requiredResourceAmount);
             gameController.requiredResourceAmount = (int)Mathf.Pow(gameController.requiredResourceAmount,gameController.resourceReqPow);
 
         }

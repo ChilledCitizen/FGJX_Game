@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9783d471b56156d409268a15fd4210ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  divisionMultiplier: 2.5
   gridSize: 100
   grassOffSet: 0
   offSet: 15.72
@@ -61,19 +62,24 @@ MonoBehaviour:
   grass3: {fileID: 1823971408707698, guid: 03ab8c2331f799d47b83c40b172090db, type: 2}
   grass4: {fileID: 1960923818060880, guid: 4545d2772402bb34b95749416b3d433f, type: 2}
   grass5: {fileID: 1624075226679880, guid: 0b403a8fa8c8e46458d9054e722da9c3, type: 2}
+  rock1: {fileID: 1353900642215470, guid: f3b341c543fe6b14f8a5257032b5e316, type: 2}
+  rock2: {fileID: 1237189637517472, guid: fe9ed2d056d7c1243a3d6794dccd3819, type: 2}
+  rock3: {fileID: 1760821721308190, guid: 3e5ad75f47fb87644ad5c86c1a2a81fc, type: 2}
   sceneScript: {fileID: 114575435911943160}
   uiController: {fileID: 0}
   resourceAmount: 0
   requiredResourceAmount: 10
-  resourceReqPow: 1.2
-  maxResourceGet: 100
-  minResourceGet: 10
-  rescueTime: 0
-  inGameTime: 0
+  resourceReqPow: 1.15
+  maxResourceGet: 5
+  minResourceGet: 1
+  rescueTime: 9999999
+  inGameTimeToRealTime: 10
   resourceObj: {fileID: 1630789462178874, guid: 8915d65fabe3cd94291864da2bb5bd03,
     type: 2}
   relayTowerList: []
   gridPieces: []
+  strength: 0
+  inLevel: 0
 --- !u!114 &114575435911943160
 MonoBehaviour:
   m_ObjectHideFlags: 1

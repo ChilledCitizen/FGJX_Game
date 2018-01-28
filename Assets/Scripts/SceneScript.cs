@@ -15,7 +15,7 @@ public class SceneScript : MonoBehaviour {
 	
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		
 			currentScene = SceneManager.GetActiveScene();
 			
